@@ -39,8 +39,15 @@ def feature_extraction(img, feature):
     elif feature == 'SIFT':
 
         # Your code here. You should also change the return value.
+        sift = cv2.SIFT_create()
+        grid_size = 20
+        keypoints = [cv2.KeyPoint(x, y, grid_size)
+                     for x in range(0, img.shape[0], grid_size)
+                     for y in range(0, img.shape[1], grid_size)]
+        _, sift_feature = sift.compute(img, keypoints)
+        return sift_feature
 
-        return np.zeros((1500, 128), dtype=np.float32)
+        # return np.zeros((1500, 128), dtype=np.float32)
         # `.shape[0]` do not have to be (and may not) 1500,
         # but `.shape[1]` should be 128.
 
