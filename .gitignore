@@ -133,3 +133,9 @@ dmypy.json
 
 # vscode
 .vscode/
+
+# numpy files
+*.npy
+
+# results
+/code/results_webpage/
