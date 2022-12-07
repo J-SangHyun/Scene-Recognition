@@ -27,10 +27,10 @@ def feature_extraction(img, feature):
         nlevels = 64
 
         # Your code here. You should also change the return value.
-        hog_desc = cv2.HOGDescriptor(win_size, block_size, block_stride, cell_size, nbins, deriv_aperture, win_sigma,
+        hog = cv2.HOGDescriptor(win_size, block_size, block_stride, cell_size, nbins, deriv_aperture, win_sigma,
                                      histogram_norm_type, l2_hys_threshold, gamma_correction, nlevels)
-        hog = hog_desc.compute(img).reshape(-1, 36)
-        return hog
+        hog_feature = hog.compute(img).reshape(-1, 36)
+        return hog_feature
 
         # return np.zeros((1500, 36), dtype=np.float32)
         # `.shape[0]` do not have to be (and may not) 1500,
