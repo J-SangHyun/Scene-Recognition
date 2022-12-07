@@ -28,7 +28,7 @@ def feature_extraction(img, feature):
 
         # Your code here. You should also change the return value.
         hog = cv2.HOGDescriptor(win_size, block_size, block_stride, cell_size, nbins, deriv_aperture, win_sigma,
-                                     histogram_norm_type, l2_hys_threshold, gamma_correction, nlevels)
+                                histogram_norm_type, l2_hys_threshold, gamma_correction, nlevels)
         hog_feature = hog.compute(img).reshape(-1, 36)
         return hog_feature
 
