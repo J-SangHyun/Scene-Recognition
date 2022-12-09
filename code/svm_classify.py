@@ -28,5 +28,18 @@ def svm_classify(train_image_feats, train_labels, test_image_feats, kernel_type)
     categories = np.unique(train_labels)
 
     # Your code here. You should also change the return value.
+    # svm.SVC(), svm.LinearSVC(), svm.SVC.fit(), svm.SVC.decision_function() from scikit-learn.
+    svms = [svm.LinearSVC() if kernel_type == 'linear' else svm.SVC() for _ in range(len(categories))]
+    scores = np.zeros((len(categories), len(test_image_feats)))
+    for i in range(len(categories)):
+        label = np.zeros((len(train_labels),))
+        label[train_labels == categories[i]] = 1
+        label[train_labels != categories[i]] = -1
+        svms[i].fit(X=train_image_feats, y=label)
+        scores[i] = svms[i].decision_function(X=test_image_feats)
 
-    return np.array([categories[0]] * 1500)
+    scores = scores.T
+    prediction = np.array([categories[np.argmax(scores[i])] for i in range(len(test_image_feats))])
+    return prediction
+
+    # return np.array([categories[0]] * 1500)
