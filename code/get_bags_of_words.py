@@ -26,5 +26,18 @@ def get_bags_of_words(image_paths, feature):
     vocab_size = vocab.shape[0]
 
     # Your code here. You should also change the return value.
+    N = len(image_paths)
+    feature_reprs = np.zeros((N, vocab_size))
 
-    return np.zeros((1500, 36))
+    for i in range(len(image_paths)):
+        img = cv2.imread(image_paths[i])[:, :, ::-1]
+        features = feature_extraction(img, feature)
+        dist = pdist(features, vocab)
+        hist = np.zeros((vocab_size,))
+        for j in range(len(features)):
+            hist[np.argmin(dist[j])] += 1.0
+        hist = hist / np.linalg.norm(hist)
+        feature_reprs[i] = hist
+    return feature_reprs
+
+    # return np.zeros((1500, 36))
