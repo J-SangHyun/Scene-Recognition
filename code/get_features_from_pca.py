@@ -15,7 +15,16 @@ def get_features_from_pca(feat_num, feature):
     vocab = np.load(f'vocab_{feature}.npy')
 
     # Your code here. You should also change the return value.
+    N, D = vocab.shape
+    mu = np.mean(vocab, axis=0)
+    for i in range(N):
+        vocab[i] -= mu
+    cov_matrix = np.cov(vocab.T)
+    eig_values, eig_vectors = np.linalg.eig(cov_matrix)
+    eig_sort_idx = eig_values.argsort()[::-1]
+    eig_values, eig_vectors = eig_values[eig_sort_idx], eig_vectors[:, eig_sort_idx]
+    eig_vectors = eig_vectors[:, :feat_num]
+    pca_features = vocab @ eig_vectors
+    return pca_features
 
-    return np.zeros((vocab.shape[0], feat_num), dtype=np.float32)
-
-
+    # return np.zeros((vocab.shape[0], feat_num), dtype=np.float32)
